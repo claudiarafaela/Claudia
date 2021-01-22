@@ -1,0 +1,138 @@
+﻿@model PagedList.IPagedList<ProyectoBase.Models.TruckModelsModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ViewTruckModels";
+}
+
+<!-- Cambiamos el objeto a PagedList.IPagedList para poder paginar -->
+<!-- PagedList.Mvc permite acceder a los botones de paginado -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnAddTruckModel").on("click", function () {
+
+            var truckModel = {
+
+                description: $("#description").val()
+
+            }
+            $.ajax({
+
+                type: "POST",
+                url: "addTruckModel",
+                data: truckModel,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    hideSpinner();
+                },
+                success: function (msg) {
+                    hideSpinner();
+                }
+            });
+        });
+        addPaginationButtons("/truckModels/viewTruckModels",@ViewBag.pageSize);
+    });
+</script>
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Catálogo de Modelos</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class='breadcrumb-header'>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Catálogos</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Catálogo de Modelos</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Striped rows start -->
+    <div class="spinner-grow loading text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <div class="row" id="table-striped">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTruckModelModal">
+                            Agregar Modelo
+                        </button>
+                        <!-- table striped -->
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th> Modelo </th>
+                                        <th> Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="text-bold-500"> @Html.DisplayFor(modelItem => item.description)</td>
+                                            <td>
+                                                @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+                                                @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <!-- Si el total de paginas es menor al numero actual entonces estamos en 0 de 0
+                                 Mandamos el request del action enviando la pagina seleccionada como parametro -->
+                            <br /><!-- Agregamos la logica para la pagina -->
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                            @Html.PagedListPager(Model, page => Url.Action("viewTruckModels", new { page,ViewBag.pageSize }))
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Striped rows end -->
+
+    <div class="modal fade text-left" id="addTruckModelModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Agregar modelo </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formAddTruckModel">
+                    <div class="modal-body">
+                        <label>Descripción: </label>
+                        <div class="form-group">
+                            <input type="text" id="description" placeholder="Descripción" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cerrar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnAddTruckModel" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

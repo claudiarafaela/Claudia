@@ -1,0 +1,296 @@
+﻿
+@{
+    ViewBag.Title = "ViewBrandModels";
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnAddTruckBrand").on("click", function () {
+
+            var truckBrand = {
+
+                description: $("#description").val(),
+                type: $("#type").val(),
+                preffix: $("#preffix").val()
+
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "addTruckBrand",
+                data: truckBrand,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La marca fue creada exitosamente.", "success");
+                }
+            });
+        });
+
+        $("#btnEditTruckBrand").on("click", function () {
+
+            var truckBrand = {
+
+                id: $("#editTruckModelId").val(),
+                description: $("#editDescription").val(),
+                type: $("#editType").val(),
+                preffix: $("#editPreffix").val()
+
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "updateTruckBrand",
+                data: truckBrand,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La marca fue actualizada exitosamente.", "success");
+                }
+            });
+        });
+
+        $("#btnDeleteTruckBrand").on("click", function () {
+
+            var truckBrand = {
+
+                id: $("#deleteTruckModelId").val()
+
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "deleteTruckBrand",
+                data: truckBrand,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La marca fue eliminada exitosamente.", "success");
+                }
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    function callEditTruckBrandModal(id, description, type, preffix) {
+
+        $("#editTruckModelId").val(id);
+        $("#editDescription").val(description);
+        $("#editType").val(type);
+        $("#editPreffix").val(preffix);
+
+        $('#editTruckBrandModal').modal('toggle');
+
+    }
+
+    function callDeleteTruckBrandModal(id) {
+
+        $("#deleteTruckModelId").val(id);
+        $('#deleteTruckBrandModal').modal('toggle');
+
+    }
+
+    function refreshRpt() {
+
+        $.ajax({
+
+            type: "GET",
+            url: "rptTruckBrands",
+            beforeSend: function () {
+            },
+            error: function (error) {
+                swal("Error.", "Ocurrió un error en la actualización del reporte.", "error");
+            },
+            success: function (partialView) {
+                $("#rptTruckBrandsTable").html(partialView);
+                $("#rptTruckBrandsTable").show();
+            }
+        });
+
+    } 
+</script>
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Catálogo de Marcas</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class='breadcrumb-header'>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Catálogos</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Catálogo de Marcas</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Striped rows start -->
+    <div class="spinner-grow loading text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <div class="row" >
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTruckBrandModal">
+                            Agregar Marca
+                        </button>
+                        <!-- table striped -->
+                        <div class="table-responsive" id="rptTruckBrandsTable">
+                            @Html.Partial("_ViewTruckBrandsPartial", (List<ProyectoBase.Models.TruckBrandModel>)ViewBag.truckBrandCatalog);
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Striped rows end -->
+
+    <div class="modal fade text-left" id="addTruckBrandModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Agregar marca </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formAddTruckBrand">
+                    <div class="modal-body">
+                        <label>Descripción: </label>
+                        <div class="form-group">
+                            <input type="text" id="description" placeholder="Descripción" class="form-control">
+                        </div>
+                        <label>Tipo: </label>
+                        <div class="form-group">
+                            <input type="text" id="type" placeholder="Tipo" class="form-control">
+                        </div>
+                        <label>Prefijo: </label>
+                        <div class="form-group">
+                            <input type="text" id="preffix" placeholder="Prefijo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cerrar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnAddTruckBrand" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL DE EDICION*@
+    <div class="modal fade text-left" id="editTruckBrandModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Editar marca </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formEditTruckBrand">
+                    <div class="modal-body">
+                        <label>Descripción: </label>
+                        <div class="form-group">
+                            <input type="text" id="editDescription" placeholder="Descripción" class="form-control">
+                        </div>
+                        <label>Tipo: </label>
+                        <div class="form-group">
+                            <input type="text" id="editType" placeholder="Tipo" class="form-control">
+                        </div>
+                        <label>Prefijo: </label>
+                        <div class="form-group">
+                            <input type="text" id="editPreffix" placeholder="Prefijo" class="form-control">
+                        </div>
+                        <input id="editTruckModelId" name="editTruckModelId" type="hidden">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cerrar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnEditTruckBrand" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL DE ELIMINAR*@
+    <div class="modal fade text-left" id="deleteTruckBrandModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Eliminar marca </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formDeleteTruckBrand">
+                    <div class="modal-body">
+                        <label>¿Seguro que desea eliminar la marca?</label>
+                        <input id="deleteTruckModelId" name="deleteTruckModelId" type="hidden">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cancelar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnDeleteTruckBrand" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Confirmar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
