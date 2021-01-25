@@ -19,6 +19,9 @@ namespace ProyectoBase
             container.RegisterType<ITruckTypeRepository, TruckTypeRepository>();
             container.RegisterType<ITruckTypeService, TruckTypeService>();
 
+            container.RegisterType<ICraneRepository, CraneRepository>();
+            container.RegisterType<ICraneService, CraneService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

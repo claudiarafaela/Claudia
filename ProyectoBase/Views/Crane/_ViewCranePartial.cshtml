@@ -1,0 +1,25 @@
+﻿@model List<ProyectoBase.Models.CraneModel>
+
+
+    <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+                <th> Grua </th>
+                <th> Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-bold-500"> @Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Editar" onclick="callEditCraneModal(@item.Id, '@item.Description')"> |
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Eliminar" onclick="callDeleteCraneModal(@item.Id)" />
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

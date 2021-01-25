@@ -72,6 +72,36 @@ namespace ProyectoBase
                 new { controller = "TruckType", action = "RptTruckType" }
             );
 
+
+            //CRANE
+            routes.MapRoute(
+                "AddCrane",
+                "CraneController/AddCrane",
+                new { controller = "Crane", action = "AddCrane" }
+            );
+            routes.MapRoute(
+                "UpdateCrane",
+                "CraneController/UpdateCrane",
+                new { controller = "Crane", action = "UpdateCrane" }
+            );
+            routes.MapRoute(
+                "DeleteCrane",
+                "CraneController/DeleteCrane",
+                new { controller = "Crane", action = "DeleteCrane" }
+            );
+            routes.MapRoute(
+                "ViewCrane",
+                "CraneController/ViewTruckCrane",
+                new { controller = "Crane", action = "ViewCrane" }
+            );
+            routes.MapRoute(
+                "RptCrane",
+                "CraneController/RptCrane",
+                new { controller = "Crane", action = "RptCrane" }
+            );
+
+
+
             //TRUCKMODEL
             routes.MapRoute(
                 "AddTruckModel",

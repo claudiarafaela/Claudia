@@ -24,6 +24,11 @@ namespace DataLibrary
 
             services.AddTransient<ITruckTypeService, TruckTypeService>();
 
+
+            services.AddTransient<ICraneRepository, CraneRepository>();
+
+            services.AddTransient<ICraneService, CraneService>();
+
             return services;
         }
 
