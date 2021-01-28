@@ -29,6 +29,10 @@ namespace DataLibrary
 
             services.AddTransient<ICraneService, CraneService>();
 
+            services.AddTransient<IBranchesRepository, BranchesRepository>();
+
+            services.AddTransient<IBranchesService, BranchesService>();
+
             return services;
         }
 

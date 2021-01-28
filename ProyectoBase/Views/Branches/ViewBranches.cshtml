@@ -1,0 +1,285 @@
+﻿
+@{
+    ViewBag.Title = "ViewBranches";
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#btnAddBranches").on("click", function () {
+
+            var Branches = {
+
+                Description: $("#description").val(),
+                Restricted: $("#restricted").val()
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "addBranches",
+                data: Branches,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La plaza fue creada exitosamente.", "success");
+                }
+            });
+        });
+
+        $("#btnEditBranches").on("click", function () {
+
+            var Branches = {
+
+                Id: $("#editBranchesId").val(),
+                Description: $("#editDescription").val(),
+                Restricted: $("#editRestricted").val()
+
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "updateBranches",
+                data: Branches,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La plaza fue actualizada exitosamente.", "success");
+                }
+            });
+        });
+
+        $("#btnDeleteBranches").on("click", function () {
+
+            var Branches = {
+
+                id: $("#deleteBranchesId").val()
+
+            }
+            showSpinner();
+            $.ajax({
+
+                type: "POST",
+                url: "deleteBranches",
+                data: Branches,
+                beforeSend: function () {
+                    showSpinner();
+                },
+                error: function (error) {
+                    hideSpinner();
+                    swal("Error.", "Ocurrió un error en el proceso.", "error");
+                },
+                success: function (msg) {
+                    refreshRpt();
+                    hideSpinner();
+                    swal("¡Éxito!", "La plaza fue eliminada exitosamente.", "success");
+                }
+            });
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    function callEditBranchesModal(Id, Description, Restricted) {
+
+        $("#editBranchesId").val(Id);
+        $("#editDescription").val(Description);
+        $("#editRestricted").val(Restricted);
+
+        $('#editBranchesModal').modal('toggle');
+
+    }
+
+    function callDeleteBranchesModal(id) {
+
+        $("#deleteBranchesId").val(id);
+        $('#deleteBranchesModal').modal('toggle');
+
+    }
+
+    function refreshRpt() {
+
+        $.ajax({
+
+            type: "GET",
+            url: "rptBranches",
+            beforeSend: function () {
+            },
+            error: function (error) {
+                swal("Error.", "Ocurrió un error en la actualización del reporte.", "error");
+            },
+            success: function (partialView) {
+                $("#rptBranchesTable").html(partialView);
+                $("#rptBranchesTable").show();
+            }
+        });
+
+    } 
+</script>
+<div class="main-content container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Catálogo de Plazas</h3>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class='breadcrumb-header'>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Catálogos</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Catálogo de Plazas</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Striped rows start -->
+    <div class="spinner-grow loading text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <div class="row" >
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-content">
+                    <div class="card-body">
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBranchesModal">
+                            Agregar Plaza
+                        </button>
+                        <!-- table striped -->
+                        <div class="table-responsive" id="rptBranchesTable">
+                            @Html.Partial("_ViewBranchesPartial", (List<ProyectoBase.Models.BranchesModel>)ViewBag.BranchesCatalog);
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Striped rows end -->
+
+    <div class="modal fade text-left" id="addBranchesModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Agregar Plaza </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formAddBranches">
+                    <div class="modal-body">
+                        <label>Descripción: </label>
+                        <div class="form-group">
+                            <input type="text" id="description" placeholder="Descripción" class="form-control">
+                        </div>
+                        <label>Restringido: </label>
+                        <div class="form-group">
+                            <input type="text" id="Restricted" placeholder="Restringido" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cerrar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnAddBranches" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL DE EDICION*@
+    <div class="modal fade text-left" id="editBranchesModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Editar Plaza </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formEditBranches">
+                    <div class="modal-body">
+                        <label>Descripción: </label>
+                        <div class="form-group">
+                            <input type="text" id="editDescription" placeholder="Descripción" class="form-control">
+                        </div>
+                        <label>Restringido: </label>
+                        <div class="form-group">
+                            <input type="text" id="editRestricted" placeholder="Restringido" class="form-control">
+                        </div>
+                   
+                        <input id="editBranchesId" name="editBranchesId" type="hidden">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cerrar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnEditBranches" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @*MODAL DE ELIMINAR*@
+    <div class="modal fade text-left" id="deleteBranchesModal" tabindex="-1" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">Eliminar Plaza </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <form action="#" id="formDeleteBranches">
+                    <div class="modal-body">
+                        <label>¿Seguro que desea eliminar la plaza?</label>
+                        <input id="deleteBranchesId" name="deleteBranchesId" type="hidden">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Cancelar</span>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" id="btnDeleteBranches" data-dismiss="modal">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Confirmar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\CraneController.cs" />
+    <Compile Include="Controllers\BranchesController.cs" />
     <Compile Include="Controllers\TruckBrandController.cs" />
     <Compile Include="Controllers\TruckModelController.cs" />
     <Compile Include="Controllers\TruckTypeController.cs" />
@@ -171,15 +172,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CraneModel.cs" />
+    <Compile Include="Models\BranchesModel.cs" />
     <Compile Include="Models\TruckBrandModel.cs" />
     <Compile Include="Models\TruckModelsModel.cs" />
     <Compile Include="Models\TruckTypeModel.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Impl\CraneService.cs" />
+    <Compile Include="Service\Impl\BranchesService.cs" />
     <Compile Include="Service\Impl\TruckTypeService.cs" />
     <Compile Include="Service\Impl\TruckBrandService.cs" />
     <Compile Include="Service\ICraneService.cs" />
+    <Compile Include="Service\IBranchesService.cs" />
     <Compile Include="Service\ITruckTypeService.cs" />
     <Compile Include="Service\ITruckBrandService.cs" />
   </ItemGroup>
@@ -614,6 +618,8 @@
     <Content Include="Views\TruckType\_ViewTruckTypePartial.cshtml" />
     <Content Include="Views\Crane\_ViewCranePartial.cshtml" />
     <Content Include="Views\Crane\ViewCrane.cshtml" />
+    <Content Include="Views\Branches\_ViewBranchesPartial.cshtml" />
+    <Content Include="Views\Branches\ViewBranches.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

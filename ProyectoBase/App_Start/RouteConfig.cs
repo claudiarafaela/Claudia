@@ -102,6 +102,35 @@ namespace ProyectoBase
 
 
 
+            //BRANCHES
+            routes.MapRoute(
+                "AddBranches",
+                "BranchesController/AddBranches",
+                new { controller = "Branches", action = "AddBranches" }
+            );
+            routes.MapRoute(
+                "UpdateBranches",
+                "BranchesController/UpdateBranches",
+                new { controller = "Branches", action = "UpdateBranches" }
+            );
+            routes.MapRoute(
+                "DeleteBranches",
+                "BranchesController/DeleteBranches",
+                new { controller = "Branches", action = "DeleteBranches" }
+            );
+            routes.MapRoute(
+                "ViewBranches",
+                "BranchesController/ViewBranches",
+                new { controller = "Branches", action = "ViewBranches" }
+            );
+            routes.MapRoute(
+                "RptBranches",
+                "BranchesController/RptBranches",
+                new { controller = "Branches", action = "RptBranches" }
+            );
+
+
+
             //TRUCKMODEL
             routes.MapRoute(
                 "AddTruckModel",

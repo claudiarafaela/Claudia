@@ -22,6 +22,9 @@ namespace ProyectoBase
             container.RegisterType<ICraneRepository, CraneRepository>();
             container.RegisterType<ICraneService, CraneService>();
 
+            container.RegisterType<IBranchesRepository, BranchesRepository>();
+            container.RegisterType<IBranchesService, BranchesService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

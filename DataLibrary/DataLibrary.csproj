@@ -50,13 +50,16 @@
   <ItemGroup>
     <Compile Include="DataAccess\SqlDataAccess.cs" />
     <Compile Include="Entity\CraneEntity.cs" />
+    <Compile Include="Entity\BranchesEntity.cs" />
     <Compile Include="Entity\TruckBrandEntity.cs" />
     <Compile Include="Entity\TruckModelsEntity.cs" />
     <Compile Include="Entity\TruckTypeEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Impl\CraneRepository.cs" />
+    <Compile Include="Repository\Impl\BranchesRepository.cs" />
     <Compile Include="Repository\Impl\TruckTypeRepository.cs" />
     <Compile Include="Repository\ICraneRepository.cs" />
+    <Compile Include="Repository\IBranchesRepository.cs" />
     <Compile Include="Repository\ITruckBrandRepository.cs" />
     <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Repository\Impl\TruckBrandRepository.cs" />

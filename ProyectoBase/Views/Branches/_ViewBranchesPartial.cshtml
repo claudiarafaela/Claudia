@@ -1,0 +1,25 @@
+﻿@model List<ProyectoBase.Models.BranchesModel>
+
+
+    <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+                <th> Plaza </th>
+                <th> Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-bold-500"> @Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Editar" onclick="callEditBranchesModal(@item.Id, '@item.Description', '@item.Restricted')"> |
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Eliminar" onclick="callDeleteBranchesModal(@item.Id)" />
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
