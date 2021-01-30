@@ -130,6 +130,63 @@ namespace ProyectoBase
             );
 
 
+            //PRODUCTION ACTIONS
+            routes.MapRoute(
+                "AddProductionActions",
+                "ProductionActionsController/AddProductionActions",
+                new { controller = "ProductionActions", action = "AddProductionActions" }
+            );
+            routes.MapRoute(
+                "UpdateProductionActions",
+                "ProductionActionsController/UpdateProductionActions",
+                new { controller = "ProductionActions", action = "UpdateProductionActions" }
+            );
+            routes.MapRoute(
+                "DeleteProductionActions",
+                "ProductionActionsController/DeleteProductionActions",
+                new { controller = "ProductionActions", action = "DeleteProductionActions" }
+            );
+            routes.MapRoute(
+                "ViewProductionActions",
+                "ProductionActionsController/ViewProductionActions",
+                new { controller = "ProductionActions", action = "ViewProductionActions" }
+            );
+            routes.MapRoute(
+                "RptProductionActions",
+                "ProductionActionsController/RptProductionActions",
+                new { controller = "ProductionActions", action = "RptProductionActions" }
+            );
+
+
+            //WAREHOUSE
+            routes.MapRoute(
+                "AddWarehouse",
+                "WarehouseController/AddWarehouse",
+                new { controller = "Warehouse", action = "AddWarehouse" }
+            );
+            routes.MapRoute(
+                "UpdateWarehouse",
+                "WarehouseController/UpdateWarehouse",
+                new { controller = "Warehouse", action = "UpdateWarehouse" }
+            );
+            routes.MapRoute(
+                "DeleteWarehouse",
+                "WarehouseController/DeleteWarehouse",
+                new { controller = "Warehouse", action = "DeleteWarehouse" }
+            );
+            routes.MapRoute(
+                "ViewWarehouse",
+                "WarehouseController/ViewWarehouse",
+                new { controller = "Warehouse", action = "ViewWarehouse" }
+            );
+            routes.MapRoute(
+                "RptWarehouse",
+                "WarehouseController/RptWarehouse",
+                new { controller = "Warehouse", action = "RptWarehouse" }
+            );
+
+
+
 
             //TRUCKMODEL
             routes.MapRoute(

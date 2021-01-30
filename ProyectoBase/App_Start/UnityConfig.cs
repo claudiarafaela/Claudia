@@ -25,6 +25,12 @@ namespace ProyectoBase
             container.RegisterType<IBranchesRepository, BranchesRepository>();
             container.RegisterType<IBranchesService, BranchesService>();
 
+            container.RegisterType<IWarehouseRepository, WarehouseRepository>();
+            container.RegisterType<IWarehouseService, WarehouseService>();
+
+            container.RegisterType<IProductionActionsRepository, ProductionActionsRepository>();
+            container.RegisterType<IProductionActionsService, ProductionActionsService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

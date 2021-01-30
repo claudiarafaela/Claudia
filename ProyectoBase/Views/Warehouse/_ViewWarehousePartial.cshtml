@@ -1,0 +1,25 @@
+﻿@model List<ProyectoBase.Models.WarehouseModel>
+
+
+    <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+                <th> Almacenes </th>
+                <th> Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-bold-500"> @Html.DisplayFor(modelItem => item.description)</td>
+                    <td>
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Editar" onclick="callEditWarehouseModal(@item.id, '@item.description', '@item.type', '@item.preffix')"> |
+                        <input type="button" class="btn btn-primary btn-sm rounded" value="Eliminar" onclick="callDeleteWarehouseModal(@item.id)" />
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+

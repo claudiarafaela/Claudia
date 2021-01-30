@@ -162,6 +162,8 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\CraneController.cs" />
     <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\ProductionActionsController.cs" />
+    <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Controllers\TruckBrandController.cs" />
     <Compile Include="Controllers\TruckModelController.cs" />
     <Compile Include="Controllers\TruckTypeController.cs" />
@@ -173,11 +175,17 @@
     </Compile>
     <Compile Include="Models\CraneModel.cs" />
     <Compile Include="Models\BranchesModel.cs" />
+    <Compile Include="Models\ProductionActionsModel.cs" />
+    <Compile Include="Models\WarehouseModel.cs" />
     <Compile Include="Models\TruckBrandModel.cs" />
     <Compile Include="Models\TruckModelsModel.cs" />
     <Compile Include="Models\TruckTypeModel.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Impl\ProductionActionsService.cs" />
+    <Compile Include="Service\Impl\WarehouseService.cs" />
+    <Compile Include="Service\IProductionActionsService.cs" />
+    <Compile Include="Service\IWarehouseService.cs" />
     <Compile Include="Service\Impl\CraneService.cs" />
     <Compile Include="Service\Impl\BranchesService.cs" />
     <Compile Include="Service\Impl\TruckTypeService.cs" />
@@ -620,6 +628,10 @@
     <Content Include="Views\Crane\ViewCrane.cshtml" />
     <Content Include="Views\Branches\_ViewBranchesPartial.cshtml" />
     <Content Include="Views\Branches\ViewBranches.cshtml" />
+    <Content Include="Views\Warehouse\_ViewWarehousePartial.cshtml" />
+    <Content Include="Views\Warehouse\ViewWarehouse.cshtml" />
+    <Content Include="Views\ProductionActions\_ViewProductionActionsPartial.cshtml" />
+    <Content Include="Views\ProductionActions\ViewProductionActions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
